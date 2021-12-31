@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUI() {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MainAdapter(arrayListOf())
+        adapter = MainAdapter(arrayListOf(), ::onItemClick)
         recyclerView.addItemDecoration(
             DividerItemDecoration(
                 recyclerView.context,
@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
             )
         )
         recyclerView.adapter = adapter
+    }
+
+    private fun onItemClick(email: String) {
+        Toast.makeText(applicationContext, "Selected: $email", Toast.LENGTH_LONG).show()
     }
 
     private fun setupObserver() {

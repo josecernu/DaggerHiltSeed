@@ -10,13 +10,17 @@ import com.josecernu.daggerhiltseed.data.model.User
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MainAdapter(
-    private val users: ArrayList<User>
+    private val users: ArrayList<User>,
+    private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(user: User) {
+        fun bind(user: User, onItemClick: (String) -> Unit ) {
             itemView.textViewUserName.text = user.name
             itemView.textViewUserEmail.text = user.email
+            itemView.setOnClickListener {
+                onItemClick(user.email)
+            }
             Glide.with(itemView.imageViewAvatar.context)
                 .load(user.avatar)
                 .into(itemView.imageViewAvatar)
@@ -34,7 +38,7 @@ class MainAdapter(
     override fun getItemCount(): Int = users.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) =
-        holder.bind(users[position])
+        holder.bind(users[position], onItemClick)
 
     fun addData(list: List<User>) {
         users.addAll(list)
